@@ -41,13 +41,13 @@ services:
       db:
         condition: service_healthy
 
-  web:
+  frontend:
     build:
-      context: ./web
+      context: ./frontend
       dockerfile: Dockerfile
       args:
         - VITE_API_BASE_URL=http://localhost:${API_PORT:-8000}
-    container_name: credit_risk_web
+    container_name: credit_risk_frontend
     restart: unless-stopped
     ports:
       - "5173:80"

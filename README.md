@@ -39,7 +39,7 @@ An end-to-end credit risk assessment platform built on the [Home Credit Default 
 | **Rule derivation** | `src/rules/rule_miner.py` | Surrogate decision tree that distils the model into IF-THEN rules |
 | **Talk-to-data** | `src/talk_to_data/` | NL→SQL chatbot: rewrite → generate → validate → execute → answer |
 | **API** | `api/` | FastAPI REST endpoints tying all modules together |
-| **Frontend** | `web/` | React SPA with EDA dashboard, predict+explain, rules, and chat tabs |
+| **Frontend** | `frontend/` | React SPA with EDA dashboard, predict+explain, rules, and chat tabs |
 | **Database** | `sql/schema.sql` | PostgreSQL schema for all 7 Home Credit tables |
 
 ---
@@ -92,7 +92,7 @@ python -m src.data.ingest_db                      # Load CSVs into Postgres
 uvicorn api.main:app --reload --port 8000
 
 # Frontend
-cd web && npm ci && npm run dev
+cd frontend && npm ci && npm run dev
 ```
 
 ---
@@ -299,7 +299,7 @@ credit_risk_platform/
 │   ├── main.py                     # FastAPI app with CORS, static mounts
 │   ├── schemas.py                  # Pydantic request/response models
 │   └── routers/                    # /eda, /predict, /explain, /rules, /chat, /health
-├── web/                            # React + Vite frontend
+├── frontend/                       # React + Vite frontend
 ├── sql/
 │   └── schema.sql                  # PostgreSQL DDL for all 7 tables
 ├── models/
