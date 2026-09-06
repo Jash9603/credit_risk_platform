@@ -260,6 +260,75 @@ The full 16-rule set is in `artifacts/rules.json` with conditions, support, obse
 
 ---
 
+## Sample Outputs
+
+### Prediction + Risk Scoring
+
+```
+POST /predict    { "sk_id_curr": 100002 }
+```
+```json
+{
+  "sk_id_curr": 100002,
+  "default_probability": 0.0735,
+  "risk_score": 74,
+  "risk_band": "Low",
+  "actual_target": 0
+}
+```
+
+### SHAP Explanation
+
+```
+POST /explain    { "sk_id_curr": 100002 }
+```
+```json
+[
+  { "feature": "EXT_SOURCE_3",        "value": "0.56",  "shap_value": -0.4812, "sentence": "External Score 3 (0.56) decreased the risk score" },
+  { "feature": "EXT_SOURCE_2",        "value": "0.65",  "shap_value": -0.3901, "sentence": "External Score 2 (0.65) decreased the risk score" },
+  { "feature": "EXT_SOURCE_1",        "value": "0.08",  "shap_value":  0.1543, "sentence": "External Score 1 (0.08) increased the risk score" },
+  { "feature": "CREDIT_INCOME_RATIO", "value": "5.98",  "shap_value":  0.0872, "sentence": "Credit-to-Income Ratio (5.98) increased the risk score" },
+  { "feature": "AGE_YEARS",           "value": "56.27", "shap_value": -0.0654, "sentence": "Age (56.27) decreased the risk score" }
+]
+```
+
+### Talk-to-Data Chatbot (NL → SQL)
+
+**Single-turn query:**
+```
+User: What is the default rate by education level?
+```
+```json
+{
+  "sql": "SELECT name_education_type, AVG(target) AS default_rate, COUNT(*) AS n FROM application_train GROUP BY name_education_type ORDER BY default_rate DESC LIMIT 200",
+  "answer": "Lower secondary: 11.1% (3,240 applicants)\nSecondary / secondary special: 8.9% (218,434 applicants)\nIncomplete higher: 7.4% (10,277 applicants)\nHigher education: 5.2% (74,863 applicants)\nAcademic degree: 1.8% (164 applicants)",
+  "refused": false
+}
+```
+
+**Multi-turn follow-up (query rewriter in action):**
+```
+User: Show the same thing but by income type instead
+Rewritten standalone question: "What is the default rate by income type?"
+```
+The query rewriter resolves "the same thing" and "instead" from conversation history into a fully self-contained question before SQL generation — downstream steps never see the history.
+
+### Rule Derivation (formatted output)
+
+```
+IF External Score 3 ≤ 0.48 AND External Score 2 ≤ 0.47
+   AND External Score 3 ≤ 0.27 AND External Score 2 ≤ 0.21
+THEN observed default rate is 33.6%
+     (4,378 applicants, 4.16× the average rate)
+
+IF External Score 3 > 0.48 AND External Score 2 > 0.50
+   AND Goods/Credit Ratio > 0.88 AND External Score 2 > 0.65
+THEN observed default rate is 2.1%
+     (30,501 applicants, 0.25× the average rate)
+```
+
+---
+
 ## Project Structure
 
 ```
