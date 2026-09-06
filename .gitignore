@@ -1,0 +1,38 @@
+# Internal planning notes — our own working doc, not part of the deliverable
+PLAN.md
+
+# Secrets
+.env
+
+# Dataset — never commit (per brief). CSVs live in data/, mounted as a volume.
+data/*
+!data/.gitkeep
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.venv/
+venv/
+env/
+*.egg-info/
+.pytest_cache/
+.ipynb_checkpoints/
+
+# NOTE: models/ and artifacts/ are intentionally NOT ignored — the brief lists saved model
+# artifacts and EDA charts as required deliverables, so the evaluator should see them in
+# the repo without having to retrain or re-run anything. Only the raw dataset (data/) and
+# secrets (.env) are excluded.
+
+# Frontend
+web/node_modules/
+web/dist/
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Docker
+*.log

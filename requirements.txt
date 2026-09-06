@@ -1,0 +1,34 @@
+# --- Config / core ---
+pydantic>=2.7
+pydantic-settings>=2.3
+python-dotenv>=1.0
+
+# --- Data & ML ---
+pandas>=2.2
+numpy>=1.26
+scikit-learn>=1.5
+lightgbm>=4.3
+shap>=0.45
+joblib>=1.4
+
+# --- EDA / plotting ---
+matplotlib>=3.9
+seaborn>=0.13
+jupyter>=1.0
+
+# --- Database ---
+sqlalchemy>=2.0
+psycopg2-binary>=2.9
+
+# --- Talk-to-data ---
+sqlglot>=25.0
+openai>=1.35
+groq>=0.9
+google-generativeai>=0.7
+
+# --- API ---
+fastapi>=0.111
+uvicorn[standard]>=0.30
+
+# --- Testing (manual smoke scripts, not a CI suite) ---
+httpx>=0.27
