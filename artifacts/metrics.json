@@ -1,0 +1,28 @@
+{
+  "roc_auc": 0.7695,
+  "pr_auc": 0.2557,
+  "ks_statistic": 0.402,
+  "chosen_threshold": 0.67,
+  "precision_at_threshold": 0.26,
+  "recall_at_threshold": 0.4059,
+  "f1_at_threshold": 0.3169,
+  "confusion_matrix": {
+    "true_negative": 254003,
+    "false_positive": 28683,
+    "false_negative": 14749,
+    "true_positive": 10076
+  },
+  "risk_band_cutoffs": {
+    "low_cutoff": 0.4173085094341818,
+    "medium_cutoff": 0.7023367027035962
+  },
+  "risk_band_distribution": {
+    "Low": 184506,
+    "Medium": 92253,
+    "High": 30752
+  },
+  "baseline_logistic_regression_auc": 0.7572,
+  "lightgbm_cv_auc": 0.7695,
+  "scale_pos_weight_used": 11.39,
+  "final_model_n_estimators": 374
+}

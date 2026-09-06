@@ -23,12 +23,8 @@ class Settings(BaseSettings):
     postgres_user: str = "credit_risk_app"
     postgres_password: str = "change_me"
 
-    llm_provider: str = "groq"
-    llm_model: str = "llama-3.3-70b-versatile"
+    llm_model: str = "gpt-4o-mini"
     openai_api_key: str = ""
-    groq_api_key: str = ""
-    gemini_api_key: str = ""
-    demo_mode: bool = True
 
     api_host: str = "0.0.0.0"
     api_port: int = 8000

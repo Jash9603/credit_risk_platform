@@ -1,10 +1,7 @@
-# Internal planning notes — our own working doc, not part of the deliverable
-PLAN.md
-
 # Secrets
 .env
 
-# Dataset — never commit (per brief). CSVs live in data/, mounted as a volume.
+# Dataset — never commit. CSVs live in data/, mounted as a Docker volume.
 data/*
 !data/.gitkeep
 
@@ -19,10 +16,13 @@ env/
 .pytest_cache/
 .ipynb_checkpoints/
 
-# NOTE: models/ and artifacts/ are intentionally NOT ignored — the brief lists saved model
-# artifacts and EDA charts as required deliverables, so the evaluator should see them in
-# the repo without having to retrain or re-run anything. Only the raw dataset (data/) and
-# secrets (.env) are excluded.
+# NOTE: models/ and artifacts/ are intentionally NOT ignored — the brief lists
+# saved model artifacts and EDA charts as required deliverables, so the evaluator
+# should see them in the repo without having to retrain or re-run anything.
+
+# Exception: artifacts/cache/ holds regenerated performance-cache files
+# (precomputed bureau/previous-application aggregates) — rebuilt automatically.
+artifacts/cache/
 
 # Frontend
 web/node_modules/

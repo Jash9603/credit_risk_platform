@@ -1,0 +1,66 @@
+:root {
+  --bg: #faf7f1;
+  --surface: #ffffff;
+  --surface-alt: #f4efe4;
+  --border: #e6ddc9;
+  --text: #2b2620;
+  --text-muted: #6d6355;
+  --accent: #5f8d4e;
+  --accent-dark: #476b3a;
+  --accent-soft: #e7f0e1;
+  --low: #3f8c46;
+  --low-bg: #e7f3e6;
+  --medium: #b8791f;
+  --medium-bg: #faedd8;
+  --high: #b23a3a;
+  --high-bg: #f8e2e0;
+
+  font-family: "Segoe UI", -apple-system, BlinkMacSystemFont, Roboto, Helvetica, Arial, sans-serif;
+  color: var(--text);
+  background-color: var(--bg);
+  line-height: 1.55;
+  font-size: 16px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+}
+
+h1, h2, h3, h4 {
+  color: var(--text);
+  font-weight: 600;
+  line-height: 1.3;
+}
+
+p {
+  color: var(--text);
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+}
+
+input, textarea {
+  font-family: inherit;
+  font-size: 1rem;
+}
+
+a {
+  color: var(--accent-dark);
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 6px;
+}

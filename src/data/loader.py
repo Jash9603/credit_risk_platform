@@ -5,6 +5,7 @@ round-trip through SQL) and reused by build_schema.py / ingest_db.py, which popu
 independent Postgres copy for the talk-to-data chatbot to query. Two data paths, one
 source of truth — see DECISIONS.md, "Data Loading & Ingest".
 """
+from functools import lru_cache
 from pathlib import Path
 from typing import Iterator, Optional
 
@@ -59,6 +60,14 @@ def iter_table_chunks(table: str, chunksize: int = 200_000) -> Iterator[pd.DataF
         yield chunk
 
 
+@lru_cache(maxsize=1)
 def load_application_train() -> pd.DataFrame:
-    """Convenience entry point for EDA/ML — the table every later phase starts from."""
+    """Convenience entry point for EDA/ML — the table every later phase starts from.
+
+    Cached for the life of the process: safe because every caller in this codebase
+    copies before mutating (see preprocessor.py), so nothing writes back into the shared
+    cached frame. This is what makes a long-running process (the API server) load it once
+    at startup instead of once per request — a single CLI invocation still only loads it
+    once anyway, so this changes nothing for that path.
+    """
     return load_table("application_train")

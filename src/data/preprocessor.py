@@ -71,6 +71,22 @@ def engineer_ratios(df: pd.DataFrame) -> pd.DataFrame:
     return df
 
 
+def _cached_aggregate(cache_name: str, raw_table: str, build_fn) -> pd.DataFrame:
+    """Compute a per-applicant aggregate once and cache it to a small CSV, instead of
+    re-loading and re-aggregating the full multi-million-row raw table on every single
+    prediction. A single prediction only needs one row out of this — reloading all of
+    bureau.csv/previous_application.csv (3.4M rows combined) to answer that is pure waste,
+    and would make the API/UI feel broken once every click re-triggers it."""
+    cache_path = settings.artifacts_path / "cache" / f"{cache_name}_features.csv"
+    if cache_path.exists():
+        return pd.read_csv(cache_path)
+
+    agg = build_fn(load_table(raw_table))
+    cache_path.parent.mkdir(parents=True, exist_ok=True)
+    agg.to_csv(cache_path, index=False)
+    return agg
+
+
 def bureau_features(bureau: pd.DataFrame) -> pd.DataFrame:
     """One row per applicant, summarising their history with *other* lenders (reported
     via the credit bureau) — see the EDA notebook, insight #6."""
@@ -105,6 +121,25 @@ def prepare_categoricals(df: pd.DataFrame) -> pd.DataFrame:
     return df
 
 
+def get_categories(df: pd.DataFrame) -> dict:
+    """Capture the exact category set each `category`-dtype column ended up with. Needed
+    because pandas infers categories from whatever data it sees — a single new applicant
+    at prediction time would otherwise only "know about" the one value present in that
+    row, giving it different integer codes than the model was trained on."""
+    cat_cols = df.select_dtypes(include="category").columns
+    return {col: df[col].cat.categories.tolist() for col in cat_cols}
+
+
+def apply_categories(df: pd.DataFrame, categories: dict) -> pd.DataFrame:
+    """Force a dataframe's categorical columns to use the exact training-time category
+    set, so a single applicant is encoded identically to how the model was trained.
+    A genuinely new/unseen category value becomes NaN, which LightGBM treats as missing."""
+    df = df.copy()
+    for col, cats in categories.items():
+        df[col] = pd.Categorical(df[col].astype(str), categories=cats)
+    return df
+
+
 def build_feature_matrix(app_df: Optional[pd.DataFrame] = None) -> pd.DataFrame:
     """Run the full cleaning + feature-engineering sequence. Pass a single-row DataFrame
     at prediction time to run the identical steps on one new applicant; leave it blank to
@@ -115,15 +150,15 @@ def build_feature_matrix(app_df: Optional[pd.DataFrame] = None) -> pd.DataFrame:
     df = convert_days_to_years(df)
     df = engineer_ratios(df)
 
-    bureau = load_table("bureau")
-    df = df.merge(bureau_features(bureau), on="SK_ID_CURR", how="left")
+    bureau_agg = _cached_aggregate("bureau", "bureau", bureau_features)
+    df = df.merge(bureau_agg, on="SK_ID_CURR", how="left")
     bureau_count_cols = ["N_BUREAU_LOANS", "N_BUREAU_ACTIVE", "N_BUREAU_BAD_DEBT"]
     df[bureau_count_cols] = df[bureau_count_cols].fillna(0)
     # AVG_BUREAU_CREDIT_SUM is left as NaN when there's no bureau history — "no data" is
     # not the same as "zero average credit", so it shouldn't be filled with 0.
 
-    prev = load_table("previous_application")
-    df = df.merge(previous_application_features(prev), on="SK_ID_CURR", how="left")
+    prev_agg = _cached_aggregate("previous_application", "previous_application", previous_application_features)
+    df = df.merge(prev_agg, on="SK_ID_CURR", how="left")
     prev_count_cols = ["N_PREV_APPLICATIONS", "N_PREV_REFUSED", "N_PREV_APPROVED"]
     df[prev_count_cols] = df[prev_count_cols].fillna(0)
     # PREV_REFUSED_RATIO stays NaN with no prior applications, same reasoning as above.

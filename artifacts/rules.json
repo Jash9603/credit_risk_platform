@@ -1,0 +1,434 @@
+[
+  {
+    "conditions": [
+      {
+        "feature": "EXT_SOURCE_3",
+        "op": "<=",
+        "threshold": 0.477
+      },
+      {
+        "feature": "EXT_SOURCE_2",
+        "op": "<=",
+        "threshold": 0.468
+      },
+      {
+        "feature": "EXT_SOURCE_3",
+        "op": "<=",
+        "threshold": 0.266
+      },
+      {
+        "feature": "EXT_SOURCE_2",
+        "op": "<=",
+        "threshold": 0.208
+      }
+    ],
+    "support": 4378,
+    "observed_default_rate": 0.3358,
+    "lift_vs_average": 4.16
+  },
+  {
+    "conditions": [
+      {
+        "feature": "EXT_SOURCE_3",
+        "op": "<=",
+        "threshold": 0.477
+      },
+      {
+        "feature": "EXT_SOURCE_2",
+        "op": "<=",
+        "threshold": 0.468
+      },
+      {
+        "feature": "EXT_SOURCE_3",
+        "op": ">",
+        "threshold": 0.266
+      },
+      {
+        "feature": "EXT_SOURCE_2",
+        "op": "<=",
+        "threshold": 0.16
+      }
+    ],
+    "support": 9076,
+    "observed_default_rate": 0.2277,
+    "lift_vs_average": 2.82
+  },
+  {
+    "conditions": [
+      {
+        "feature": "EXT_SOURCE_3",
+        "op": "<=",
+        "threshold": 0.477
+      },
+      {
+        "feature": "EXT_SOURCE_2",
+        "op": "<=",
+        "threshold": 0.468
+      },
+      {
+        "feature": "EXT_SOURCE_3",
+        "op": "<=",
+        "threshold": 0.266
+      },
+      {
+        "feature": "EXT_SOURCE_2",
+        "op": ">",
+        "threshold": 0.208
+      }
+    ],
+    "support": 8869,
+    "observed_default_rate": 0.2173,
+    "lift_vs_average": 2.69
+  },
+  {
+    "conditions": [
+      {
+        "feature": "EXT_SOURCE_3",
+        "op": "<=",
+        "threshold": 0.477
+      },
+      {
+        "feature": "EXT_SOURCE_2",
+        "op": ">",
+        "threshold": 0.468
+      },
+      {
+        "feature": "EXT_SOURCE_3",
+        "op": "<=",
+        "threshold": 0.267
+      },
+      {
+        "feature": "EXT_SOURCE_1",
+        "op": "<=",
+        "threshold": 0.576
+      }
+    ],
+    "support": 16382,
+    "observed_default_rate": 0.1509,
+    "lift_vs_average": 1.87
+  },
+  {
+    "conditions": [
+      {
+        "feature": "EXT_SOURCE_3",
+        "op": ">",
+        "threshold": 0.477
+      },
+      {
+        "feature": "EXT_SOURCE_2",
+        "op": "<=",
+        "threshold": 0.498
+      },
+      {
+        "feature": "YEARS_EMPLOYED",
+        "op": "<=",
+        "threshold": 8.067
+      },
+      {
+        "feature": "EXT_SOURCE_2",
+        "op": "<=",
+        "threshold": 0.234
+      }
+    ],
+    "support": 7177,
+    "observed_default_rate": 0.13,
+    "lift_vs_average": 1.61
+  },
+  {
+    "conditions": [
+      {
+        "feature": "EXT_SOURCE_3",
+        "op": "<=",
+        "threshold": 0.477
+      },
+      {
+        "feature": "EXT_SOURCE_2",
+        "op": "<=",
+        "threshold": 0.468
+      },
+      {
+        "feature": "EXT_SOURCE_3",
+        "op": ">",
+        "threshold": 0.266
+      },
+      {
+        "feature": "EXT_SOURCE_2",
+        "op": ">",
+        "threshold": 0.16
+      }
+    ],
+    "support": 36376,
+    "observed_default_rate": 0.1266,
+    "lift_vs_average": 1.57
+  },
+  {
+    "conditions": [
+      {
+        "feature": "EXT_SOURCE_3",
+        "op": "<=",
+        "threshold": 0.477
+      },
+      {
+        "feature": "EXT_SOURCE_2",
+        "op": ">",
+        "threshold": 0.468
+      },
+      {
+        "feature": "EXT_SOURCE_3",
+        "op": "<=",
+        "threshold": 0.267
+      },
+      {
+        "feature": "EXT_SOURCE_1",
+        "op": ">",
+        "threshold": 0.576
+      }
+    ],
+    "support": 3453,
+    "observed_default_rate": 0.0794,
+    "lift_vs_average": 0.98
+  },
+  {
+    "conditions": [
+      {
+        "feature": "EXT_SOURCE_3",
+        "op": "<=",
+        "threshold": 0.477
+      },
+      {
+        "feature": "EXT_SOURCE_2",
+        "op": ">",
+        "threshold": 0.468
+      },
+      {
+        "feature": "EXT_SOURCE_3",
+        "op": ">",
+        "threshold": 0.267
+      },
+      {
+        "feature": "EXT_SOURCE_2",
+        "op": "<=",
+        "threshold": 0.658
+      }
+    ],
+    "support": 50561,
+    "observed_default_rate": 0.077,
+    "lift_vs_average": 0.95
+  },
+  {
+    "conditions": [
+      {
+        "feature": "EXT_SOURCE_3",
+        "op": ">",
+        "threshold": 0.477
+      },
+      {
+        "feature": "EXT_SOURCE_2",
+        "op": "<=",
+        "threshold": 0.498
+      },
+      {
+        "feature": "YEARS_EMPLOYED",
+        "op": "<=",
+        "threshold": 8.067
+      },
+      {
+        "feature": "EXT_SOURCE_2",
+        "op": ">",
+        "threshold": 0.234
+      }
+    ],
+    "support": 19917,
+    "observed_default_rate": 0.075,
+    "lift_vs_average": 0.93
+  },
+  {
+    "conditions": [
+      {
+        "feature": "EXT_SOURCE_3",
+        "op": ">",
+        "threshold": 0.477
+      },
+      {
+        "feature": "EXT_SOURCE_2",
+        "op": "<=",
+        "threshold": 0.498
+      },
+      {
+        "feature": "YEARS_EMPLOYED",
+        "op": ">",
+        "threshold": 8.067
+      },
+      {
+        "feature": "EXT_SOURCE_2",
+        "op": "<=",
+        "threshold": 0.256
+      }
+    ],
+    "support": 7194,
+    "observed_default_rate": 0.0733,
+    "lift_vs_average": 0.91
+  },
+  {
+    "conditions": [
+      {
+        "feature": "EXT_SOURCE_3",
+        "op": "<=",
+        "threshold": 0.477
+      },
+      {
+        "feature": "EXT_SOURCE_2",
+        "op": ">",
+        "threshold": 0.468
+      },
+      {
+        "feature": "EXT_SOURCE_3",
+        "op": ">",
+        "threshold": 0.267
+      },
+      {
+        "feature": "EXT_SOURCE_2",
+        "op": ">",
+        "threshold": 0.658
+      }
+    ],
+    "support": 31061,
+    "observed_default_rate": 0.0456,
+    "lift_vs_average": 0.57
+  },
+  {
+    "conditions": [
+      {
+        "feature": "EXT_SOURCE_3",
+        "op": ">",
+        "threshold": 0.477
+      },
+      {
+        "feature": "EXT_SOURCE_2",
+        "op": ">",
+        "threshold": 0.498
+      },
+      {
+        "feature": "GOODS_CREDIT_RATIO",
+        "op": "<=",
+        "threshold": 0.881
+      },
+      {
+        "feature": "EXT_SOURCE_1",
+        "op": "<=",
+        "threshold": 0.571
+      }
+    ],
+    "support": 29882,
+    "observed_default_rate": 0.0454,
+    "lift_vs_average": 0.56
+  },
+  {
+    "conditions": [
+      {
+        "feature": "EXT_SOURCE_3",
+        "op": ">",
+        "threshold": 0.477
+      },
+      {
+        "feature": "EXT_SOURCE_2",
+        "op": "<=",
+        "threshold": 0.498
+      },
+      {
+        "feature": "YEARS_EMPLOYED",
+        "op": ">",
+        "threshold": 8.067
+      },
+      {
+        "feature": "EXT_SOURCE_2",
+        "op": ">",
+        "threshold": 0.256
+      }
+    ],
+    "support": 16061,
+    "observed_default_rate": 0.0403,
+    "lift_vs_average": 0.5
+  },
+  {
+    "conditions": [
+      {
+        "feature": "EXT_SOURCE_3",
+        "op": ">",
+        "threshold": 0.477
+      },
+      {
+        "feature": "EXT_SOURCE_2",
+        "op": ">",
+        "threshold": 0.498
+      },
+      {
+        "feature": "GOODS_CREDIT_RATIO",
+        "op": ">",
+        "threshold": 0.881
+      },
+      {
+        "feature": "EXT_SOURCE_2",
+        "op": "<=",
+        "threshold": 0.646
+      }
+    ],
+    "support": 28749,
+    "observed_default_rate": 0.0324,
+    "lift_vs_average": 0.4
+  },
+  {
+    "conditions": [
+      {
+        "feature": "EXT_SOURCE_3",
+        "op": ">",
+        "threshold": 0.477
+      },
+      {
+        "feature": "EXT_SOURCE_2",
+        "op": ">",
+        "threshold": 0.498
+      },
+      {
+        "feature": "GOODS_CREDIT_RATIO",
+        "op": "<=",
+        "threshold": 0.881
+      },
+      {
+        "feature": "EXT_SOURCE_1",
+        "op": ">",
+        "threshold": 0.571
+      }
+    ],
+    "support": 7874,
+    "observed_default_rate": 0.0236,
+    "lift_vs_average": 0.29
+  },
+  {
+    "conditions": [
+      {
+        "feature": "EXT_SOURCE_3",
+        "op": ">",
+        "threshold": 0.477
+      },
+      {
+        "feature": "EXT_SOURCE_2",
+        "op": ">",
+        "threshold": 0.498
+      },
+      {
+        "feature": "GOODS_CREDIT_RATIO",
+        "op": ">",
+        "threshold": 0.881
+      },
+      {
+        "feature": "EXT_SOURCE_2",
+        "op": ">",
+        "threshold": 0.646
+      }
+    ],
+    "support": 30501,
+    "observed_default_rate": 0.0205,
+    "lift_vs_average": 0.25
+  }
+]
