@@ -73,14 +73,19 @@ def load_application_train() -> pd.DataFrame:
     The 2.5GB raw CSVs are never shipped in the deployed API image — falls back to
     reading the same table from Postgres (already seeded there for the chatbot) when the
     local CSV isn't present, so the identical code path works locally and in production.
+
+    Uses a raw psycopg2 connection rather than a SQLAlchemy engine: SQLAlchemy's Postgres
+    dialect parses the server's version string on first connect, and CockroachDB's version
+    string ("CockroachDB CCL v26.2.5 ...") doesn't match the "PostgreSQL X.Y" pattern it
+    expects, raising a hard AssertionError. Raw psycopg2 skips that dialect layer entirely.
     """
     if table_path("application_train").exists():
         return load_table("application_train")
 
-    from sqlalchemy import create_engine
+    import psycopg2
 
     logger.info("application_train.csv not found locally — loading it from Postgres instead")
-    engine = create_engine(settings.pg_dsn)
-    df = pd.read_sql("SELECT * FROM application_train", engine)
+    with psycopg2.connect(settings.pg_dsn) as conn:
+        df = pd.read_sql("SELECT * FROM application_train", conn)
     df.columns = [c.upper() for c in df.columns]
     return reduce_mem_usage(df, verbose=False)
