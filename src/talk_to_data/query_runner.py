@@ -21,13 +21,7 @@ class QueryExecutionError(Exception):
 
 
 def run_query(sql: str) -> dict:
-    conn = psycopg2.connect(
-        host=settings.postgres_host,
-        port=settings.postgres_port,
-        dbname=settings.postgres_db,
-        user=settings.postgres_user,
-        password=settings.postgres_password,
-    )
+    conn = psycopg2.connect(settings.pg_dsn)
     try:
         with conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor) as cur:
             cur.execute("SET TRANSACTION READ ONLY")

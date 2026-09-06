@@ -23,6 +23,11 @@ class Settings(BaseSettings):
     postgres_user: str = "credit_risk_app"
     postgres_password: str = "change_me"
 
+    # Full connection string for a managed Postgres (e.g. Neon), used as-is when set —
+    # takes priority over the discrete postgres_* fields above. Local Docker Compose
+    # leaves this blank and keeps using postgres_host/db/etc against the `db` service.
+    database_url: str = ""
+
     llm_model: str = "gpt-4o-mini"
     openai_api_key: str = ""
 
@@ -31,9 +36,11 @@ class Settings(BaseSettings):
     cors_origins: str = "http://localhost:5173"
 
     @property
-    def database_url(self) -> str:
+    def pg_dsn(self) -> str:
+        if self.database_url:
+            return self.database_url
         return (
-            f"postgresql+psycopg2://{self.postgres_user}:{self.postgres_password}"
+            f"postgresql://{self.postgres_user}:{self.postgres_password}"
             f"@{self.postgres_host}:{self.postgres_port}/{self.postgres_db}"
         )
 

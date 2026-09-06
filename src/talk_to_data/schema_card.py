@@ -49,13 +49,7 @@ Join keys:
 
 
 def _fetch_columns(table: str) -> list:
-    conn = psycopg2.connect(
-        host=settings.postgres_host,
-        port=settings.postgres_port,
-        dbname=settings.postgres_db,
-        user=settings.postgres_user,
-        password=settings.postgres_password,
-    )
+    conn = psycopg2.connect(settings.pg_dsn)
     try:
         with conn.cursor() as cur:
             cur.execute(
@@ -83,8 +77,7 @@ _cached_card = None
 
 def get_schema_card() -> str:
     """Fetched from Postgres once per process and cached — not at import time, so
-    nothing here creates a database dependency for code paths that don't need it
-    (e.g. DEMO_MODE replay, which never calls this)."""
+    nothing here creates a database dependency for a code path that doesn't need it."""
     global _cached_card
     if _cached_card is None:
         _cached_card = build_schema_card()

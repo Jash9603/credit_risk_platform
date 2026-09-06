@@ -22,13 +22,7 @@ logger = get_logger(__name__)
 
 
 def _connect():
-    return psycopg2.connect(
-        host=settings.postgres_host,
-        port=settings.postgres_port,
-        dbname=settings.postgres_db,
-        user=settings.postgres_user,
-        password=settings.postgres_password,
-    )
+    return psycopg2.connect(settings.pg_dsn)
 
 
 def _table_is_empty(conn, table: str) -> bool:
@@ -62,7 +56,15 @@ def ingest_table(conn, table: str) -> None:
 
 
 def main() -> None:
-    wait_for_port(settings.postgres_host, settings.postgres_port, timeout=60)
+    if not table_path("application_train").exists():
+        logger.info(
+            "No local CSVs found (production image) — assuming the target database "
+            "was already seeded and skipping ingest."
+        )
+        return
+
+    if not settings.database_url:
+        wait_for_port(settings.postgres_host, settings.postgres_port, timeout=60)
     conn = _connect()
     try:
         for table in TABLE_FILES:

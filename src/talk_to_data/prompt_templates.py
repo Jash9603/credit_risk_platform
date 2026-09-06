@@ -82,6 +82,6 @@ number that isn't there. If the rows are empty, say so plainly instead of guessi
 
 
 def get_sql_system_prompt() -> str:
-    """Built on demand, not at import time — DEMO_MODE replay never calls this, so it
-    never needs a database connection just to import this module."""
+    """Built on demand, not at import time, so importing this module never requires a
+    database connection just to construct the prompt string."""
     return _SQL_PROMPT_TEMPLATE.format(schema_card=get_schema_card())

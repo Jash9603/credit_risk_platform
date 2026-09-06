@@ -108,7 +108,6 @@ export default function ChatSection() {
               <li>The AI only ever sees a compact list of table and column names, not long descriptions of every field, so each request stays small.</li>
               <li>Query results are capped at 200 rows by the database, and only the first 50 are ever shown to the step that writes the final answer, so one huge result never balloons a request.</li>
               <li>Follow-up questions are first condensed into a single, self-contained question by a small dedicated step, instead of replaying the entire conversation into every request as the chat grows longer.</li>
-              <li>The 5 common question patterns can be answered from saved past answers instead of calling the AI again, when no API key is available.</li>
             </ul>
           </Card>
 

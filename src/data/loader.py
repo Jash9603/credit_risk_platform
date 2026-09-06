@@ -69,5 +69,18 @@ def load_application_train() -> pd.DataFrame:
     cached frame. This is what makes a long-running process (the API server) load it once
     at startup instead of once per request — a single CLI invocation still only loads it
     once anyway, so this changes nothing for that path.
+
+    The 2.5GB raw CSVs are never shipped in the deployed API image — falls back to
+    reading the same table from Postgres (already seeded there for the chatbot) when the
+    local CSV isn't present, so the identical code path works locally and in production.
     """
-    return load_table("application_train")
+    if table_path("application_train").exists():
+        return load_table("application_train")
+
+    from sqlalchemy import create_engine
+
+    logger.info("application_train.csv not found locally — loading it from Postgres instead")
+    engine = create_engine(settings.pg_dsn)
+    df = pd.read_sql("SELECT * FROM application_train", engine)
+    df.columns = [c.upper() for c in df.columns]
+    return reduce_mem_usage(df, verbose=False)

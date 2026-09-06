@@ -20,9 +20,10 @@ env/
 # saved model artifacts and EDA charts as required deliverables, so the evaluator
 # should see them in the repo without having to retrain or re-run anything.
 
-# Exception: artifacts/cache/ holds regenerated performance-cache files
-# (precomputed bureau/previous-application aggregates) — rebuilt automatically.
-artifacts/cache/
+# artifacts/cache/ holds precomputed bureau/previous-application aggregates (~14MB) —
+# rebuilt automatically from the raw CSVs when missing, but committed anyway so the
+# production API image (which never ships the multi-GB raw tables) has them without
+# needing bureau.csv/previous_application.csv at all.
 
 # Frontend
 frontend/node_modules/
