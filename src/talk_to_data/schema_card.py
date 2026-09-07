@@ -21,15 +21,21 @@ TABLES = [
 ]
 
 SUPPLEMENTARY_NOTES = """
-Known categorical values (use these exact strings in WHERE clauses):
+Known categorical values (use these exact strings in WHERE clauses — if the user's
+wording is close but not an exact match, e.g. a misspelling or a synonym, use the closest
+value from this list rather than the user's own wording, since anything else silently
+matches zero rows instead of raising an error):
   application_train.code_gender: 'M', 'F'
   application_train.name_education_type: 'Academic degree', 'Higher education',
     'Incomplete higher', 'Lower secondary', 'Secondary / secondary special'
   application_train.name_income_type: 'Working', 'Commercial associate', 'Pensioner',
     'State servant', 'Unemployed', 'Student', 'Businessman', 'Maternity leave'
+  application_train.name_contract_type: 'Cash loans', 'Revolving loans'
   application_train.flag_own_car / flag_own_realty: 'Y', 'N'
   bureau.credit_active: 'Active', 'Closed', 'Sold', 'Bad debt'
   previous_application.name_contract_status: 'Approved', 'Refused', 'Canceled', 'Unused offer'
+  previous_application.name_contract_type: 'Cash loans', 'Consumer loans',
+    'Revolving loans', 'XNA'
 
 Known data quirks:
   application_train.days_employed: negative days; the sentinel value 365243 means
