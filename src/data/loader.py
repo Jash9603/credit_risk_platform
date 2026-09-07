@@ -96,21 +96,45 @@ def load_application_train() -> pd.DataFrame:
     return reduce_mem_usage(df, verbose=False)
 
 
+NUMERIC_PG_TYPES = {"double precision", "bigint", "smallint", "integer", "real", "numeric"}
+
+
 def query_applicant_row(sk_id_curr: int) -> pd.DataFrame:
     """Single-applicant lookup straight from Postgres — the production equivalent of
     filtering load_application_train() by SK_ID_CURR, without ever pulling the other
-    307,510 rows into memory to answer a one-row question."""
+    307,510 rows into memory to answer a one-row question.
+
+    A single-row DataFrame can't infer a numeric dtype from one NULL value alone —
+    pandas falls back to `object`, which prepare_categoricals() (preprocessor.py) then
+    misreads as a categorical column, giving LightGBM one categorical column more than
+    it was trained with ("train and valid dataset categorical_feature do not match").
+    The CSV path never hits this: pandas.read_csv establishes each column's dtype from
+    all 307k rows before any single row is filtered out. Explicitly casting every
+    genuinely-numeric Postgres column here reproduces that same dtype, whether or not
+    this one applicant's value happens to be NULL.
+    """
     import psycopg2
 
     with psycopg2.connect(settings.pg_dsn) as conn:
         with conn.cursor() as cur:
+            cur.execute(
+                "SELECT column_name, data_type FROM information_schema.columns "
+                "WHERE table_name = 'application_train' ORDER BY ordinal_position"
+            )
+            schema = cur.fetchall()
+
             cur.execute("SELECT * FROM application_train WHERE sk_id_curr = %s", (sk_id_curr,))
             row = cur.fetchone()
-            colnames = [c.upper() for c in [d[0] for d in cur.description]]
 
+    colnames = [name.upper() for name, _ in schema]
     if row is None:
         return pd.DataFrame(columns=colnames)
-    return pd.DataFrame([row], columns=colnames)
+
+    df = pd.DataFrame([row], columns=colnames)
+    for name, data_type in schema:
+        if data_type in NUMERIC_PG_TYPES:
+            df[name.upper()] = pd.to_numeric(df[name.upper()], errors="coerce")
+    return df
 
 
 def eda_summary_from_db() -> dict:
