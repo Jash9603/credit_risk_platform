@@ -1,0 +1,685 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Credit Risk Intelligence Platform</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;700;800&family=Source+Serif+4:opsz,wght@8..60,400;8..60,500;8..60,600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #faf7f1;
+    --surface: #ffffff;
+    --surface-alt: #f4efe4;
+    --border: #e2d8c3;
+    --rule: #d9cbaa;
+    --text: #2b2620;
+    --text-muted: #6d6355;
+    --accent: #5f8d4e;
+    --accent-dark: #3c5f31;
+    --accent-soft: #e7f0e1;
+    --low: #3f8c46;
+    --low-bg: #e7f3e6;
+    --medium: #b8791f;
+    --medium-bg: #faedd8;
+    --high: #b23a3a;
+    --high-bg: #f8e2e0;
+    --display: "Archivo", "Segoe UI", sans-serif;
+    --body: "Source Serif 4", Georgia, serif;
+    --mono: "IBM Plex Mono", "Consolas", monospace;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background: #d8d0bd;
+    font-family: var(--body);
+    color: var(--text);
+  }
+
+  .deck {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 28px;
+    padding: 28px 0 60px;
+  }
+
+  .slide {
+    width: 1280px;
+    height: 720px;
+    background: var(--bg);
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(43,38,32,0.18);
+    display: flex;
+    flex-direction: column;
+  }
+
+  .header {
+    flex-shrink: 0;
+    padding: 34px 56px 0;
+  }
+
+  .kicker {
+    font-family: var(--mono);
+    font-size: 12.5px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--accent-dark);
+    margin: 0 0 8px;
+  }
+
+  h1.slide-title {
+    font-family: var(--display);
+    font-weight: 800;
+    font-size: 34px;
+    margin: 0;
+    letter-spacing: -0.01em;
+    text-wrap: balance;
+  }
+
+  .content {
+    flex: 1;
+    min-height: 0;
+    overflow: hidden;
+    padding: 22px 56px 0;
+  }
+
+  .footer {
+    position: absolute;
+    bottom: 20px;
+    left: 56px;
+    right: 56px;
+    display: flex;
+    justify-content: space-between;
+    font-family: var(--mono);
+    font-size: 10.5px;
+    color: var(--text-muted);
+    border-top: 1px solid var(--rule);
+    padding-top: 10px;
+  }
+
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 16px 18px;
+  }
+
+  .card-alt { background: var(--surface-alt); }
+
+  .card-title {
+    font-family: var(--display);
+    font-weight: 700;
+    font-size: 14px;
+    margin: 0 0 8px;
+  }
+
+  ul.tight, ol.tight {
+    margin: 0;
+    padding-left: 18px;
+  }
+  ul.tight li, ol.tight li {
+    margin-bottom: 5px;
+    font-size: 13px;
+    line-height: 1.4;
+  }
+  ul.tight li:last-child, ol.tight li:last-child { margin-bottom: 0; }
+
+  .mono { font-family: var(--mono); }
+
+  table.data {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 12.5px;
+  }
+  table.data th, table.data td {
+    text-align: left;
+    padding: 6px 10px;
+    border-bottom: 1px solid var(--border);
+  }
+  table.data th {
+    font-family: var(--display);
+    font-weight: 700;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--text-muted);
+  }
+  table.data td.num { font-family: var(--mono); }
+
+  img.shot {
+    width: 100%;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    display: block;
+  }
+
+  /* ---- Slide 1: Title ---- */
+  .title-hero {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 0 80px;
+  }
+  .title-hero .mark {
+    font-family: var(--mono);
+    font-size: 13px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--accent-dark);
+    margin-bottom: 22px;
+  }
+  .title-hero h1 {
+    font-family: var(--display);
+    font-weight: 800;
+    font-size: 54px;
+    line-height: 1.06;
+    margin: 0 0 18px;
+    letter-spacing: -0.015em;
+    max-width: 820px;
+    text-wrap: balance;
+  }
+  .title-hero .thesis {
+    font-family: var(--body);
+    font-style: italic;
+    font-size: 20px;
+    color: var(--text-muted);
+    max-width: 700px;
+    margin: 0 0 40px;
+    line-height: 1.5;
+  }
+  .meta-grid {
+    display: grid;
+    grid-template-columns: repeat(4, auto);
+    gap: 40px;
+  }
+  .meta-grid .item .label {
+    font-family: var(--mono);
+    font-size: 10.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--text-muted);
+    margin-bottom: 4px;
+  }
+  .meta-grid .item .value {
+    font-family: var(--display);
+    font-weight: 700;
+    font-size: 16px;
+  }
+
+  /* ---- Slide 2: business context ---- */
+  .kicker-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 12px; }
+  .kicker-list li {
+    display: flex;
+    gap: 14px;
+    align-items: baseline;
+    font-size: 15px;
+    line-height: 1.45;
+  }
+  .kicker-list .num {
+    font-family: var(--mono);
+    color: var(--accent);
+    font-weight: 600;
+    font-size: 13px;
+    flex-shrink: 0;
+    width: 20px;
+  }
+  .stat-card {
+    background: var(--accent-soft);
+    border: 1px solid var(--accent);
+    border-radius: 10px;
+    padding: 20px 24px;
+    text-align: center;
+  }
+  .stat-card .big {
+    font-family: var(--mono);
+    font-weight: 600;
+    font-size: 40px;
+    color: var(--accent-dark);
+  }
+  .stat-card .cap {
+    font-size: 13px;
+    color: var(--text-muted);
+    margin-top: 4px;
+  }
+
+  /* ---- pipeline (slide 3) ---- */
+  .pipeline { display: flex; align-items: stretch; gap: 0; }
+  .pipe-step {
+    flex: 1;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .pipe-step .n {
+    font-family: var(--mono);
+    color: var(--accent);
+    font-size: 12px;
+    font-weight: 600;
+  }
+  .pipe-step .t {
+    font-family: var(--display);
+    font-weight: 700;
+    font-size: 14.5px;
+    line-height: 1.25;
+  }
+  .pipe-step .d {
+    font-size: 12px;
+    color: var(--text-muted);
+    line-height: 1.4;
+  }
+  .pipe-arrow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    color: var(--accent);
+    font-size: 20px;
+    flex-shrink: 0;
+  }
+
+  /* ---- stat tiles (slide 4) ---- */
+  .stat-tiles {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 8px;
+  }
+  .stat-tile {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 10px 12px;
+  }
+  .stat-tile .v {
+    font-family: var(--mono);
+    font-weight: 600;
+    font-size: 22px;
+    color: var(--accent-dark);
+  }
+  .stat-tile .l {
+    font-size: 11px;
+    color: var(--text-muted);
+    margin-top: 2px;
+  }
+
+  /* band bar (slide 5) */
+  .band-bar { display: flex; height: 34px; border-radius: 6px; overflow: hidden; border: 1px solid var(--border); }
+  .band-seg { display: flex; align-items: center; justify-content: center; font-family: var(--mono); font-size: 12px; font-weight: 600; color: #fff; white-space: nowrap; overflow: hidden; }
+  .band-legend { display: flex; gap: 22px; margin-top: 8px; font-size: 12px; color: var(--text-muted); }
+  .band-legend .dot { display:inline-block; width:9px; height:9px; border-radius:2px; margin-right:6px; vertical-align: middle; }
+
+  .badge {
+    display: inline-block;
+    font-family: var(--mono);
+    font-size: 11px;
+    font-weight: 600;
+    padding: 3px 9px;
+    border-radius: 999px;
+  }
+  .badge-high { background: var(--high-bg); color: var(--high); }
+  .badge-low { background: var(--low-bg); color: var(--low); }
+
+  .code-block {
+    background: #2b2620;
+    color: #e7e2d6;
+    font-family: var(--mono);
+    font-size: 12px;
+    line-height: 1.6;
+    border-radius: 8px;
+    padding: 14px 16px;
+    white-space: pre;
+    overflow: hidden;
+  }
+  .code-block .g { color: #8fbb7e; }
+  .code-block .m { color: #cbb887; }
+
+  .check-list { list-style: none; margin: 0; padding: 0; }
+  .check-list li {
+    display: flex; gap: 8px; font-size: 13px; margin-bottom: 6px; line-height: 1.4;
+  }
+  .check-list .c { color: var(--accent-dark); font-weight: 700; flex-shrink: 0; }
+
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; align-items: start; }
+  .three-col { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
+
+  @media print {
+    body { background: #fff; padding: 0; margin: 0; }
+    .deck { padding: 0; gap: 0; }
+    .slide { box-shadow: none; page-break-after: always; }
+  }
+</style>
+</head>
+<body>
+<div class="deck">
+
+  <!-- Slide 1: Title -->
+  <section class="slide">
+    <div class="title-hero">
+      <div class="mark">Home Credit Default Risk &mdash; Round 1 Submission</div>
+      <h1>Credit Risk Intelligence Platform</h1>
+      <p class="thesis">An end-to-end system that scores a loan applicant, explains why in plain English, states the policy rules behind that score, and answers free-form questions about the underlying data &mdash; all from one deployed application.</p>
+      <div class="meta-grid">
+        <div class="item"><div class="label">Dataset</div><div class="value">Home Credit (307,511 applicants)</div></div>
+        <div class="item"><div class="label">Model</div><div class="value">LightGBM, ROC-AUC 0.7695</div></div>
+        <div class="item"><div class="label">Stack</div><div class="value">FastAPI + React + Postgres</div></div>
+        <div class="item"><div class="label">Author</div><div class="value">Jash Kevadiya</div></div>
+      </div>
+    </div>
+    <div class="footer"><span>Credit Risk Intelligence Platform</span><span>01 / 10</span></div>
+  </section>
+
+  <!-- Slide 2: Business Context -->
+  <section class="slide">
+    <div class="header">
+      <p class="kicker">Business Context</p>
+      <h1 class="slide-title">Why credit default prediction matters</h1>
+    </div>
+    <div class="content">
+      <div class="two-col" style="grid-template-columns: 1.5fr 1fr;">
+        <ul class="kicker-list">
+          <li><span class="num">01</span><span>A bank approves loans without knowing, upfront, which applicants will struggle to repay &mdash; every default is a direct financial loss.</span></li>
+          <li><span class="num">02</span><span>A blanket accuracy metric is misleading here: with only ~8% of applicants defaulting, a model that always predicts "no default" looks 92% accurate while being useless.</span></li>
+          <li><span class="num">03</span><span>Risk officers need a *reason*, not just a score &mdash; a rejected applicant, and any regulator, can ask "why," and "the model said so" is not an acceptable answer.</span></li>
+          <li><span class="num">04</span><span>Policy teams think in rules ("reject if X and Y"), not probabilities &mdash; the model's judgment needs to be translated into that language to be actionable.</span></li>
+          <li><span class="num">05</span><span>Analysts who are not SQL-fluent still need to interrogate the data directly &mdash; "how many applicants with bad bureau debt also defaulted?" shouldn't require an engineer.</span></li>
+          <li><span class="num">06</span><span>All of this has to be one coherent, deployed system &mdash; a notebook full of separate scripts is not something a bank could actually put in front of a loan officer.</span></li>
+        </ul>
+        <div class="stat-card">
+          <div class="big">8.07%</div>
+          <div class="cap">of applicants in the training data had real payment difficulty &mdash; the central class-imbalance problem this platform is built around</div>
+        </div>
+      </div>
+    </div>
+    <div class="footer"><span>Business Context</span><span>02 / 10</span></div>
+  </section>
+
+  <!-- Slide 3: Architecture -->
+  <section class="slide">
+    <div class="header">
+      <p class="kicker">System Design</p>
+      <h1 class="slide-title">Architecture overview</h1>
+    </div>
+    <div class="content" style="display:flex; align-items:center; height:100%;">
+      <div class="pipeline" style="width:100%;">
+        <div class="pipe-step">
+          <div class="n">01</div>
+          <div class="t">Data &amp; EDA</div>
+          <div class="d">7-table Home Credit dataset loaded, cleaned, and profiled &mdash; findings drive every later decision.</div>
+        </div>
+        <div class="pipe-arrow">&rarr;</div>
+        <div class="pipe-step">
+          <div class="n">02</div>
+          <div class="t">Feature pipeline</div>
+          <div class="d">~134 engineered + raw features, bureau/previous-application aggregates cached for speed.</div>
+        </div>
+        <div class="pipe-arrow">&rarr;</div>
+        <div class="pipe-step">
+          <div class="n">03</div>
+          <div class="t">LightGBM model</div>
+          <div class="d">scale_pos_weight for imbalance, ROC-AUC 0.7695 vs. a 0.7572 logistic baseline.</div>
+        </div>
+        <div class="pipe-arrow">&rarr;</div>
+        <div class="pipe-step">
+          <div class="n">04</div>
+          <div class="t">SHAP + rules</div>
+          <div class="d">Per-prediction explanations and a surrogate decision tree turned into policy rules.</div>
+        </div>
+        <div class="pipe-arrow">&rarr;</div>
+        <div class="pipe-step">
+          <div class="n">05</div>
+          <div class="t">NL &rarr; SQL chat</div>
+          <div class="d">Schema-grounded SQL generation, validated and executed read-only against Postgres.</div>
+        </div>
+        <div class="pipe-arrow">&rarr;</div>
+        <div class="pipe-step">
+          <div class="n">06</div>
+          <div class="t">FastAPI + React</div>
+          <div class="d">One API surface, one dashboard UI, containerized with Docker Compose.</div>
+        </div>
+      </div>
+    </div>
+    <div class="footer"><span>System Design</span><span>03 / 10</span></div>
+  </section>
+
+  <!-- Slide 4: Data & EDA -->
+  <section class="slide">
+    <div class="header">
+      <p class="kicker">Data &amp; EDA</p>
+      <h1 class="slide-title">What the data actually looks like</h1>
+    </div>
+    <div class="content">
+      <div class="two-col" style="grid-template-columns: 1fr 1fr; gap: 20px;">
+        <div>
+          <div class="stat-tiles" style="margin-bottom: 12px;">
+            <div class="stat-tile"><div class="v">307,511</div><div class="l">applicants</div></div>
+            <div class="stat-tile"><div class="v">122</div><div class="l">raw columns</div></div>
+            <div class="stat-tile"><div class="v">8.07%</div><div class="l">default rate</div></div>
+            <div class="stat-tile"><div class="v">67</div><div class="l">cols w/ missing</div></div>
+          </div>
+          <div class="card card-alt">
+            <p class="card-title" style="margin-bottom:6px;">Six findings that shaped the build</p>
+            <ol class="tight" style="font-size:12px; line-height:1.35;">
+              <li style="margin-bottom:4px;">Most missing data is optional apartment/building detail &mdash; not a data error.</li>
+              <li style="margin-bottom:4px;">External credit scores (EXT_SOURCE 1/2/3) are the strongest single predictor of default.</li>
+              <li style="margin-bottom:4px;">Younger applicants default roughly 2x more than the 56&ndash;65 group.</li>
+              <li style="margin-bottom:4px;">Unemployed/maternity-leave and lower-education segments run well above average risk.</li>
+              <li style="margin-bottom:4px;">The DAYS_EMPLOYED "365243" placeholder is itself a useful, lower-risk retiree signal.</li>
+              <li style="margin-bottom:0;">Zero bureau credit history is a mild risk signal &mdash; "unknown" isn't the same as "safe".</li>
+            </ol>
+          </div>
+        </div>
+        <img class="shot" src="screenshots/01_eda_dashboard.png" alt="EDA dashboard">
+      </div>
+    </div>
+    <div class="footer"><span>Data &amp; EDA</span><span>04 / 10</span></div>
+  </section>
+
+  <!-- Slide 5: ML Model -->
+  <section class="slide">
+    <div class="header">
+      <p class="kicker">Modeling</p>
+      <h1 class="slide-title">Machine learning model</h1>
+    </div>
+    <div class="content">
+      <div class="two-col">
+        <div>
+          <table class="data" style="margin-bottom:12px;">
+            <tr><th>Model</th><th>ROC-AUC</th></tr>
+            <tr><td>Logistic Regression (baseline)</td><td class="num">0.7572</td></tr>
+            <tr><td><strong>LightGBM (deployed)</strong></td><td class="num"><strong>0.7695</strong></td></tr>
+          </table>
+          <table class="data" style="margin-bottom:12px;">
+            <tr><th>Metric</th><th>Value</th></tr>
+            <tr><td>PR-AUC</td><td class="num">0.2557</td></tr>
+            <tr><td>KS statistic</td><td class="num">0.402</td></tr>
+            <tr><td>F1 @ threshold 0.67</td><td class="num">0.3169</td></tr>
+            <tr><td>Recall @ threshold 0.67</td><td class="num">40.6%</td></tr>
+          </table>
+          <div class="card card-alt">
+            <p class="card-title" style="margin-bottom:4px;">Class imbalance handling</p>
+            <p style="margin:0; font-size:12.5px; line-height:1.4;">scale_pos_weight = <span class="mono">11.39</span> (= non-defaulters / defaulters), not SMOTE or undersampling &mdash; reweights the loss instead of synthesizing or discarding real rows.</p>
+          </div>
+        </div>
+        <div>
+          <p class="card-title" style="margin-bottom:6px;">Risk bands (percentile cutoffs, not fixed values)</p>
+          <div class="band-bar">
+            <div class="band-seg" style="width:60%; background:var(--low);">Low 60%</div>
+            <div class="band-seg" style="width:30%; background:var(--medium);">Med 30%</div>
+            <div class="band-seg" style="width:10%; background:var(--high); font-size:10px;">High</div>
+          </div>
+          <div class="band-legend">
+            <span><span class="dot" style="background:var(--low);"></span>184,506</span>
+            <span><span class="dot" style="background:var(--medium);"></span>92,253</span>
+            <span><span class="dot" style="background:var(--high);"></span>30,752</span>
+          </div>
+          <div class="card" style="margin-top:14px;">
+            <p class="card-title" style="margin-bottom:6px;">Why LightGBM over XGBoost</p>
+            <p style="margin:0; font-size:12.5px; line-height:1.45;">Both now handle categorical features and histogram-based splitting natively. LightGBM does both out of the box for this dataset's mix of categorical and high-cardinality columns with no extra configuration &mdash; a convenience call, not a capability gap.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="footer"><span>Modeling</span><span>05 / 10</span></div>
+  </section>
+
+  <!-- Slide 6: Explainability -->
+  <section class="slide">
+    <div class="header">
+      <p class="kicker">Explainability</p>
+      <h1 class="slide-title">Every score comes with a reason</h1>
+    </div>
+    <div class="content">
+      <div class="two-col" style="grid-template-columns: 1fr 1.1fr;">
+        <div>
+          <div class="card card-alt" style="margin-bottom:12px;">
+            <p class="card-title">Applicant #100002 (real example)</p>
+            <p style="margin:0 0 6px; font-size:13px;">Score <span class="mono" style="font-weight:600;">848 / 1000</span> &nbsp; <span class="badge badge-high">High risk</span></p>
+            <p style="margin:0; font-size:12.5px; color:var(--text-muted);">Actual outcome on record: had payment trouble &mdash; the model's High call was correct for this applicant.</p>
+          </div>
+          <div class="card">
+            <p class="card-title">Why only the top 5 factors?</p>
+            <p style="margin:0; font-size:12.5px; line-height:1.45;">SHAP computes a contribution for all ~134 features internally, but showing every one to a non-technical reader defeats the purpose of "explainable." The top 5 is what a credit officer can actually act on.</p>
+          </div>
+        </div>
+        <img class="shot" src="screenshots/02_predict_explain.png" alt="Prediction and explainability">
+      </div>
+    </div>
+    <div class="footer"><span>Explainability</span><span>06 / 10</span></div>
+  </section>
+
+  <!-- Slide 7: Business Rules -->
+  <section class="slide">
+    <div class="header">
+      <p class="kicker">Rule Derivation</p>
+      <h1 class="slide-title">Turning the model into policy rules</h1>
+    </div>
+    <div class="content">
+      <div class="two-col" style="grid-template-columns: 1.2fr 1fr;">
+        <div>
+          <table class="data" style="margin-bottom:10px;">
+            <tr><th>Default rate</th><th>Lift</th><th>Support</th></tr>
+            <tr><td class="num">33.6%</td><td class="num">4.16&times;</td><td class="num">4,378</td></tr>
+            <tr><td class="num">22.8%</td><td class="num">2.82&times;</td><td class="num">9,076</td></tr>
+            <tr><td class="num">21.7%</td><td class="num">2.69&times;</td><td class="num">8,869</td></tr>
+            <tr><td class="num">15.1%</td><td class="num">1.87&times;</td><td class="num">16,382</td></tr>
+            <tr><td class="num">2.1%</td><td class="num">0.25&times;</td><td class="num">30,501</td></tr>
+          </table>
+          <div class="card card-alt">
+            <p style="margin:0; font-size:12px; line-height:1.4;"><strong>Honest limitation:</strong> 13 of 16 rules split only on the two external bureau scores (EXT_SOURCE_2/3) &mdash; they dominate the model's decision surface. Confirmed independently by both EDA and SHAP, not a rule-miner limitation.</p>
+          </div>
+        </div>
+        <img class="shot" src="screenshots/03_decision_rules.png" alt="Decision rules">
+      </div>
+    </div>
+    <div class="footer"><span>Rule Derivation</span><span>07 / 10</span></div>
+  </section>
+
+  <!-- Slide 8: Talk-to-Data Chatbot -->
+  <section class="slide">
+    <div class="header">
+      <p class="kicker">Talk-to-Data</p>
+      <h1 class="slide-title">Natural language, real SQL, grounded answers</h1>
+    </div>
+    <div class="content">
+      <div class="two-col" style="grid-template-columns: 1.05fr 1fr;">
+        <img class="shot" src="screenshots/05_chat_answer_sql.png" alt="Chatbot answer with SQL">
+        <div style="display:flex; flex-direction:column; gap:10px;">
+          <div class="card card-alt">
+            <p class="card-title" style="margin-bottom:6px;">Token optimization</p>
+            <ul class="tight" style="font-size:12px;">
+              <li>Compact schema card (columns + types only), not verbose per-field docs.</li>
+              <li>Rows capped at 200 by the DB; only 50 ever reach the answer-writer.</li>
+              <li>Follow-ups are condensed to one standalone question by a dedicated small step, instead of replaying full history every turn.</li>
+            </ul>
+          </div>
+          <div class="card">
+            <p class="card-title" style="margin-bottom:6px;">Hallucination mitigation</p>
+            <ul class="tight" style="font-size:12px;">
+              <li>Schema grounded in Postgres's real <span class="mono">information_schema</span> + real categorical values &mdash; not memorized guesses.</li>
+              <li>Every SQL statement actually executes read-only before anything is treated as fact.</li>
+              <li>Answer synthesis is closed-book: only the real returned rows, never a number invented to fill a gap.</li>
+              <li>Three defense-in-depth SQL safety layers: prompt rules, AST validator (SELECT-only, table allowlist), <span class="mono">READ ONLY</span> transaction.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="footer"><span>Talk-to-Data</span><span>08 / 10</span></div>
+  </section>
+
+  <!-- Slide 9: Dockerized Deployment -->
+  <section class="slide">
+    <div class="header">
+      <p class="kicker">Deployment</p>
+      <h1 class="slide-title">One command, fully containerized</h1>
+    </div>
+    <div class="content">
+      <div class="two-col" style="grid-template-columns: 1fr 1fr;">
+        <div>
+          <div class="code-block" style="margin-bottom:12px;">$ docker compose up --build
+<span class="g">&#10003;</span> db        Healthy
+<span class="g">&#10003;</span> api       Started
+<span class="g">&#10003;</span> frontend  Started</div>
+          <div class="card card-alt">
+            <p class="card-title" style="margin-bottom:6px;">What happens automatically</p>
+            <ol class="tight" style="font-size:12px;">
+              <li>Postgres starts and passes its healthcheck.</li>
+              <li>API waits on that healthcheck, then idempotently ingests all 7 tables.</li>
+              <li>Model + EDA charts are already baked into the API image &mdash; nothing retrains.</li>
+              <li>Frontend is a static build served by nginx, API URL baked in at build time.</li>
+            </ol>
+          </div>
+        </div>
+        <img class="shot" src="screenshots/06_api_docs.png" alt="API docs">
+      </div>
+    </div>
+    <div class="footer"><span>Deployment</span><span>09 / 10</span></div>
+  </section>
+
+  <!-- Slide 10: Results Summary -->
+  <section class="slide">
+    <div class="header">
+      <p class="kicker">Wrap-up</p>
+      <h1 class="slide-title">Results summary</h1>
+    </div>
+    <div class="content">
+      <div class="two-col">
+        <div>
+          <p class="card-title" style="margin-bottom:8px;">Delivered</p>
+          <ul class="check-list">
+            <li><span class="c">&#10003;</span>EDA with 8 documented business insights</li>
+            <li><span class="c">&#10003;</span>LightGBM model, class-imbalance handled, ROC-AUC 0.7695</li>
+            <li><span class="c">&#10003;</span>SHAP explainability on every prediction</li>
+            <li><span class="c">&#10003;</span>16 rules derived from the model's own behavior</li>
+            <li><span class="c">&#10003;</span>NL-to-SQL chatbot, grounded &amp; validated</li>
+            <li><span class="c">&#10003;</span>Multi-section dashboard UI, dockerized end to end</li>
+          </ul>
+        </div>
+        <div>
+          <p class="card-title" style="margin-bottom:8px;">Known limitations</p>
+          <ul class="tight" style="font-size:12.5px;">
+            <li>Rules lean heavily on the two external bureau scores.</li>
+            <li>Metrics are out-of-fold CV estimates &mdash; no labeled held-out test set exists.</li>
+            <li>No hyperparameter search beyond early-stopping tree count.</li>
+            <li>Single LLM provider (OpenAI) for the chatbot, not provider-agnostic.</li>
+          </ul>
+          <div class="card card-alt" style="margin-top:14px;">
+            <p style="margin:0; font-size:12.5px; line-height:1.4;">Full reasoning behind every design choice is in <span class="mono">DECISIONS.md</span> in the repository.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="footer"><span>Wrap-up</span><span>10 / 10</span></div>
+  </section>
+
+</div>
+</body>
+</html>

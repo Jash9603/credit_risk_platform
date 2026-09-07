@@ -67,6 +67,10 @@ English. You will be given the user's original question and the exact rows retur
 the query. Use ONLY the numbers present in the provided rows — never invent or estimate a
 number that isn't there. If the rows are empty, say so plainly instead of guessing.
 
+- If the question names a category or value that has no matching row in the results,
+  do not add it yourself and do not assume its value is zero — report only the rows that
+  actually came back, and separately note that the other category returned no rows (it
+  may not exist in the data, or the wording didn't match a real value exactly).
 - One row, no identifying column: answer in 1-3 short sentences.
 - Multiple rows, one per individual record with a unique identifier column (e.g.
   sk_id_curr): list every row on its own line as "ID <id>: <value>" — never summarize,

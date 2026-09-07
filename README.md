@@ -244,6 +244,19 @@ Query results are passed to a separate **answer synthesis prompt** that formats 
 
 ---
 
+## Hallucination Mitigation
+
+The chatbot never lets the LLM state a fact from memory — every number in an answer has to trace back to a real row from a real query. Four layers work together:
+
+1. **Grounded schema, not memorized values.** The LLM never guesses a table/column name or a categorical string — the schema card (see above) is generated from Postgres's live `information_schema` plus a list of the real values a categorical column holds. Without the real value list, a close-but-wrong guess (e.g. a user typing "resolving loans" instead of "revolving loans") gets used verbatim in the `WHERE` clause and silently matches zero rows — no error, just quietly wrong. This actually happened during testing (see the exact repro below) and is why the categorical value list has to be kept complete, not partial.
+2. **Execution-checked SQL, not trusted SQL.** The generated query actually runs against the real database inside a validated, read-only transaction (see Defense-in-Depth SQL Validation above) — a query can be syntactically fine and still be semantically wrong, so nothing is treated as true until the database itself has returned rows for it.
+3. **Answer synthesis is closed-book.** The second LLM call that writes the final English answer is only ever shown the question and the actual returned rows — not the database, not prior conversation, nothing else. Its system prompt explicitly forbids inventing or estimating any number not present in those rows.
+4. **No silent fill-ins for missing categories.** Early testing surfaced a subtler failure: given rows for only one of two categories asked about (e.g. valid data for "Cash loans" but no matching rows for a misspelled "Resolving loans"), the answer-writer would infer the missing one was `0` — a plausible-looking number that was never actually returned by the query. The prompt now explicitly requires reporting that a named category returned no rows, instead of assuming it means zero. Verified with a direct repro: the same input that used to produce `"Resolving loans: 0"` now produces `"Resolving loans: no rows returned."`
+
+**Known residual risk**: this reduces but doesn't formally eliminate hallucination — an LLM can still deviate from its system prompt on an unusual phrasing. The schema/execution grounding (layers 1-2) is a hard guarantee (bad SQL just returns no/wrong rows, visible in "Show SQL and raw rows"); the synthesis instructions (layers 3-4) are strong but not provably unbreakable, which is exactly why the raw SQL and rows are always shown alongside the answer — so a reader can verify against the real query result rather than trust the prose alone.
+
+---
+
 ## Rule Derivation Logic
 
 Business rules are extracted using a **surrogate decision tree** approach:
