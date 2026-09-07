@@ -4,6 +4,18 @@ An end-to-end credit risk assessment platform built on the [Home Credit Default 
 
 ---
 
+## Live Deployment
+
+| Component | URL / Connection |
+|---|---|
+| Frontend (Vercel) | https://credit-risk-platform-beta.vercel.app/ |
+| Backend API (Render) | https://credit-risk-platform-txam.onrender.com |
+| Database (CockroachDB Serverless) | `postgresql://kevadiya:<password>@galaxy-phoenix-32526.j77.aws-ap-southeast-3.cockroachlabs.cloud:26257/defaultdb?sslmode=verify-full` |
+
+This deployment runs on free-tier hosting end to end, so predictions and chatbot answers can be noticeably slower than running the same platform locally with Docker (see below) — the free API instance spins down when idle and the free database tier has limited compute.
+
+---
+
 ## Architecture Overview
 
 ```

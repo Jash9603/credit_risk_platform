@@ -67,6 +67,22 @@ export default function App() {
           Built end to end: data pipeline, ML model, explainability, business rules, and a
           talk to data chatbot, all working on the real dataset.
         </div>
+
+        <div
+          style={{
+            marginTop: "1rem",
+            padding: "0.65rem 0.75rem",
+            borderRadius: 8,
+            background: "var(--high-bg)",
+            color: "var(--high)",
+            fontSize: "0.75rem",
+            lineHeight: 1.45,
+          }}
+        >
+          This deployment runs on free-tier hosting with a free-tier database. Because the
+          dataset is large, predictions and chatbot answers can take a while to come back.
+          Running it locally with Docker is much faster.
+        </div>
       </aside>
 
       <main

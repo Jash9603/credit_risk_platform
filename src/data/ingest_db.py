@@ -22,12 +22,15 @@ from src.utils.logger import get_logger
 
 logger = get_logger(__name__)
 
-# Rows per COPY + commit. Plain Postgres would happily take one giant transaction, but a
-# distributed backend (CockroachDB) tracks per-row locks for the life of a transaction and
-# has a fixed lock-tracking budget — a several-hundred-thousand-row table in one uncommitted
-# transaction blows past it. Committing in chunks keeps every backend working the same way,
-# and also bounds how much work a dropped connection (see MAX_ATTEMPTS below) throws away.
-CHUNK_ROWS = 10_000
+# Rows per COPY + commit. A local/plain Postgres container is reliable and happy to take
+# one giant transaction (a large chunk just gives crash-resumability without much cost).
+# A managed/serverless backend (Neon, CockroachDB) is a different story: it tracks
+# per-row locks for the life of a transaction with a fixed budget that a several-hundred-
+# thousand-row single transaction blows past, and its proxy can drop a long-lived
+# connection mid-COPY for reasons that have nothing to do with the data. Small chunks
+# there trade some throughput for actually finishing reliably; there's no such trade-off
+# to make locally, so keep local ingestion fast instead of needlessly throttling it.
+CHUNK_ROWS = 10_000 if settings.database_url else 2_000_000
 MAX_ATTEMPTS = 5
 
 
