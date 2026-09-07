@@ -4,7 +4,7 @@ images — the API never re-runs analysis, it just exposes what's already in art
 from fastapi import APIRouter
 
 from api.schemas import EDAInsight, EDASummaryResponse
-from src.data.loader import load_application_train
+from src.data.loader import eda_summary_from_db, load_application_train, table_path
 
 router = APIRouter(prefix="/eda", tags=["eda"])
 
@@ -56,6 +56,9 @@ INSIGHTS = [
 
 @router.get("/summary", response_model=EDASummaryResponse)
 def summary():
+    if not table_path("application_train").exists():
+        return EDASummaryResponse(**eda_summary_from_db())
+
     app = load_application_train()
     missing_counts = app.isna().sum()
     return EDASummaryResponse(

@@ -9,7 +9,7 @@ from functools import lru_cache
 import joblib
 import pandas as pd
 
-from src.data.loader import load_application_train
+from src.data.loader import load_application_train, query_applicant_row, table_path
 from src.data.preprocessor import apply_categories, build_feature_matrix
 from src.ml.evaluate import risk_band
 from src.utils.config import settings
@@ -31,8 +31,11 @@ def load_artifacts():
 
 
 def get_applicant_row(sk_id_curr: int) -> pd.DataFrame:
-    app = load_application_train()
-    row = app[app["SK_ID_CURR"] == sk_id_curr]
+    if table_path("application_train").exists():
+        app = load_application_train()
+        row = app[app["SK_ID_CURR"] == sk_id_curr]
+    else:
+        row = query_applicant_row(sk_id_curr)
     if row.empty:
         raise ValueError(f"SK_ID_CURR {sk_id_curr} not found in application_train.")
     return row

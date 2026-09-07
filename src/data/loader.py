@@ -72,7 +72,12 @@ def load_application_train() -> pd.DataFrame:
 
     The 2.5GB raw CSVs are never shipped in the deployed API image — falls back to
     reading the same table from Postgres (already seeded there for the chatbot) when the
-    local CSV isn't present, so the identical code path works locally and in production.
+    local CSV isn't present, so a CLI run or notebook still works unchanged in that
+    environment. The live API deliberately avoids calling this function at all when
+    there's no local CSV (see api/main.py, get_applicant_row, eda summary()) — a free-tier
+    host doesn't have the RAM to hold all 307k rows resident, so production queries
+    Postgres directly, per request, for the one row or the handful of aggregates it
+    actually needs instead of materialising the whole table.
 
     Uses a raw psycopg2 connection rather than a SQLAlchemy engine: SQLAlchemy's Postgres
     dialect parses the server's version string on first connect, and CockroachDB's version
@@ -89,3 +94,52 @@ def load_application_train() -> pd.DataFrame:
         df = pd.read_sql("SELECT * FROM application_train", conn)
     df.columns = [c.upper() for c in df.columns]
     return reduce_mem_usage(df, verbose=False)
+
+
+def query_applicant_row(sk_id_curr: int) -> pd.DataFrame:
+    """Single-applicant lookup straight from Postgres — the production equivalent of
+    filtering load_application_train() by SK_ID_CURR, without ever pulling the other
+    307,510 rows into memory to answer a one-row question."""
+    import psycopg2
+
+    with psycopg2.connect(settings.pg_dsn) as conn:
+        with conn.cursor() as cur:
+            cur.execute("SELECT * FROM application_train WHERE sk_id_curr = %s", (sk_id_curr,))
+            row = cur.fetchone()
+            colnames = [c.upper() for c in [d[0] for d in cur.description]]
+
+    if row is None:
+        return pd.DataFrame(columns=colnames)
+    return pd.DataFrame([row], columns=colnames)
+
+
+def eda_summary_from_db() -> dict:
+    """The four EDA summary numbers (applicant count, feature count, default rate,
+    columns with any missing value), computed with one aggregate SQL query instead of
+    pulling all 307k rows client-side just to call .isna().sum() on them."""
+    import psycopg2
+
+    with psycopg2.connect(settings.pg_dsn) as conn:
+        with conn.cursor() as cur:
+            cur.execute(
+                "SELECT column_name FROM information_schema.columns "
+                "WHERE table_name = 'application_train'"
+            )
+            columns = [r[0] for r in cur.fetchall()]
+
+            null_exprs = ", ".join(f'SUM(("{c}" IS NULL)::INT) AS "{c}"' for c in columns)
+            cur.execute(f"SELECT COUNT(*) AS n, AVG(target) AS rate, {null_exprs} FROM application_train")
+            row = cur.fetchone()
+            colnames = [d[0] for d in cur.description]
+
+    values = dict(zip(colnames, row))
+    n_applicants = values.pop("n")
+    default_rate = float(values.pop("rate"))
+    n_columns_with_missing = sum(1 for v in values.values() if v)
+
+    return {
+        "n_applicants": n_applicants,
+        "n_features": len(columns),
+        "default_rate_pct": round(default_rate * 100, 2),
+        "n_columns_with_missing": n_columns_with_missing,
+    }
