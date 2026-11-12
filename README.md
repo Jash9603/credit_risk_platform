@@ -1,42 +1,26 @@
 # Credit Risk Intelligence Platform
 
-An end-to-end credit risk assessment platform built on the [Home Credit Default Risk](https://www.kaggle.com/c/home-credit-default-risk) dataset. It combines a trained ML model, SHAP-based explainability, decision-tree-derived business rules, and a natural-language chatbot that lets analysts query the underlying data conversationally — all behind a single Docker Compose command.
+**Score loan applicants for default risk, explain every score, and let analysts query the data in plain English.**
+
+Built on the [Home Credit Default Risk](https://www.kaggle.com/c/home-credit-default-risk) dataset (307K applicants, 7 tables). A LightGBM model scores each applicant, SHAP says why, a surrogate decision tree turns the model into rules a policy team can read, and a guarded NL-to-SQL chatbot answers questions about the data. The whole stack starts with one `docker compose up`.
+
+| ROC-AUC | PR-AUC | KS statistic | Baseline (Logistic Regression) |
+|---|---|---|---|
+| **0.7695** | 0.2557 | 0.402 | 0.7572 |
+
+All metrics are out-of-fold from 5-fold stratified CV.
+
+![Credit Risk Platform architecture](/architecture.svg)
+
+## Key design decisions
+
+- **`scale_pos_weight`, not SMOTE.** About 8% of applicants default. Reweighting the loss (11.39) uses every real row, is deterministic, and avoids synthetic points in a high-dimensional space. The decision threshold is then tuned for F1 (0.67) because reweighting shifts the probabilities.
+- **A score is never shown without its reasons.** SHAP explains each applicant in plain English, and a depth-4 surrogate tree distils the deployed model into 16 IF-THEN rules (for example, the lowest-scoring group defaults at 33.6%, 4.16x the average).
+- **The chatbot cannot state a number it did not retrieve.** SQL passes an AST validator (SELECT-only, 7-table allowlist, LIMIT 200), failures are fed back for up to 2 retries, and the answer writer only sees the returned rows. The raw SQL and rows are always displayed next to the answer.
 
 ---
 
-## Live Deployment
-
-| Component | URL / Connection |
-|---|---|
-| Frontend (Vercel) | https://credit-risk-platform-beta.vercel.app/ |
-| Backend API (Render) | https://credit-risk-platform-txam.onrender.com |
-| Database (CockroachDB Serverless) | `postgresql://kevadiya:<password>@galaxy-phoenix-32526.j77.aws-ap-southeast-3.cockroachlabs.cloud:26257/defaultdb?sslmode=verify-full` |
-
-This deployment runs on free-tier hosting end to end, so predictions and chatbot answers can be noticeably slower than running the same platform locally with Docker (see below) — the free API instance spins down when idle and the free database tier has limited compute.
-
----
-
-## Architecture Overview
-
-```
-┌─────────────────────────────────────────────────────────────────┐
-│                        Docker Compose                           │
-│                                                                 │
-│  ┌──────────┐    ┌───────────────────────────┐    ┌──────────┐  │
-│  │  React   │───▶│     FastAPI Backend       │───▶│ Postgres │  │
-│  │ Frontend │    │                           │    │  (data)  │  │
-│  │ (Nginx)  │    │  /predict  /explain       │    └──────────┘  │
-│  │ :5173    │    │  /eda      /rules         │         ▲        │
-│  └──────────┘    │  /chat     /health        │         │        │
-│                  │           :8000            │    CSV ingest    │
-│                  └─────────┬─────────────────┘    (auto on      │
-│                            │                       first boot)  │
-│                     ┌──────┴──────┐                             │
-│                     │  model.pkl  │                             │
-│                     │  (LightGBM) │                             │
-│                     └─────────────┘                             │
-└─────────────────────────────────────────────────────────────────┘
-```
+## Architecture notes
 
 ### Component Breakdown
 
