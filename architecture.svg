@@ -1,0 +1,104 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 660" width="1200" height="660" font-family="Segoe UI, Helvetica, Arial, sans-serif">
+<defs><marker id="a-blue" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#58a6ff"/></marker><marker id="a-green" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#3fb950"/></marker><marker id="a-orange" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#d29922"/></marker><marker id="a-purple" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#bc8cff"/></marker><marker id="a-red" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#f85149"/></marker><marker id="a-teal" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#39c5cf"/></marker><marker id="a-pink" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#f778ba"/></marker><marker id="a-gray" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#8b949e"/></marker></defs>
+<rect width="1200" height="660" rx="14" fill="#0d1117"/><rect x="0.5" y="0.5" width="1199" height="659" rx="14" fill="none" stroke="#30363d"/>
+<text x="28" y="40" font-size="20" fill="#e6edf3" font-weight="700" text-anchor="start">Credit Risk Platform architecture</text>
+<text x="28" y="62" font-size="13" fill="#8b949e" font-weight="400" text-anchor="start">Score an applicant, explain the score, distil the model into rules, and query the data in plain English</text>
+<rect x="30" y="85" width="200" height="545" rx="12" fill="#58a6ff" fill-opacity="0.04" stroke="#58a6ff" stroke-opacity="0.45" stroke-dasharray="5 4"/>
+<text x="44" y="107" font-size="11" fill="#58a6ff" font-weight="700" text-anchor="start">REACT SPA</text>
+<rect x="260" y="85" width="630" height="545" rx="12" fill="#3fb950" fill-opacity="0.04" stroke="#3fb950" stroke-opacity="0.45" stroke-dasharray="5 4"/>
+<text x="274" y="107" font-size="11" fill="#3fb950" font-weight="700" text-anchor="start">FASTAPI BACKEND</text>
+<rect x="915" y="85" width="255" height="545" rx="12" fill="#bc8cff" fill-opacity="0.04" stroke="#bc8cff" stroke-opacity="0.45" stroke-dasharray="5 4"/>
+<text x="929" y="107" font-size="11" fill="#bc8cff" font-weight="700" text-anchor="start">DATA &amp; OFFLINE JOBS</text>
+<rect x="45" y="120" width="170" height="70" rx="9" fill="#161b22" stroke="#58a6ff" stroke-width="1.5"/><rect x="45" y="120" width="5" height="70" rx="2" fill="#58a6ff"/>
+<text x="132.0" y="144" font-size="14" fill="#e6edf3" font-weight="700" text-anchor="middle">EDA dashboard</text>
+<text x="132.0" y="163" font-size="11.5" fill="#8b949e" font-weight="400" text-anchor="middle">portfolio charts</text>
+<rect x="45" y="212" width="170" height="70" rx="9" fill="#161b22" stroke="#58a6ff" stroke-width="1.5"/><rect x="45" y="212" width="5" height="70" rx="2" fill="#58a6ff"/>
+<text x="132.0" y="236" font-size="14" fill="#e6edf3" font-weight="700" text-anchor="middle">Predict + explain</text>
+<text x="132.0" y="255" font-size="11.5" fill="#8b949e" font-weight="400" text-anchor="middle">score + SHAP reasons</text>
+<rect x="45" y="304" width="170" height="70" rx="9" fill="#161b22" stroke="#58a6ff" stroke-width="1.5"/><rect x="45" y="304" width="5" height="70" rx="2" fill="#58a6ff"/>
+<text x="132.0" y="328" font-size="14" fill="#e6edf3" font-weight="700" text-anchor="middle">Rules</text>
+<text x="132.0" y="347" font-size="11.5" fill="#8b949e" font-weight="400" text-anchor="middle">IF-THEN policy rules</text>
+<rect x="45" y="396" width="170" height="70" rx="9" fill="#161b22" stroke="#58a6ff" stroke-width="1.5"/><rect x="45" y="396" width="5" height="70" rx="2" fill="#58a6ff"/>
+<text x="132.0" y="420" font-size="14" fill="#e6edf3" font-weight="700" text-anchor="middle">Chat</text>
+<text x="132.0" y="439" font-size="11.5" fill="#8b949e" font-weight="400" text-anchor="middle">ask the data in English</text>
+<rect x="275" y="120" width="135" height="76" rx="9" fill="#161b22" stroke="#3fb950" stroke-width="1.5"/><rect x="275" y="120" width="5" height="76" rx="2" fill="#3fb950"/>
+<text x="344.5" y="144" font-size="14" fill="#e6edf3" font-weight="700" text-anchor="middle">/eda</text>
+<text x="344.5" y="163" font-size="11.5" fill="#8b949e" font-weight="400" text-anchor="middle">saved EDA charts</text>
+<rect x="422" y="120" width="135" height="76" rx="9" fill="#161b22" stroke="#3fb950" stroke-width="1.5"/><rect x="422" y="120" width="5" height="76" rx="2" fill="#3fb950"/>
+<text x="491.5" y="144" font-size="14" fill="#e6edf3" font-weight="700" text-anchor="middle">/predict</text>
+<text x="491.5" y="163" font-size="11.5" fill="#8b949e" font-weight="400" text-anchor="middle">risk score 0–1000</text>
+<text x="491.5" y="179" font-size="11.5" fill="#8b949e" font-weight="400" text-anchor="middle">+ risk band</text>
+<rect x="569" y="120" width="135" height="76" rx="9" fill="#161b22" stroke="#3fb950" stroke-width="1.5"/><rect x="569" y="120" width="5" height="76" rx="2" fill="#3fb950"/>
+<text x="638.5" y="144" font-size="14" fill="#e6edf3" font-weight="700" text-anchor="middle">/explain</text>
+<text x="638.5" y="163" font-size="11.5" fill="#8b949e" font-weight="400" text-anchor="middle">SHAP TreeExplainer</text>
+<text x="638.5" y="179" font-size="11.5" fill="#8b949e" font-weight="400" text-anchor="middle">per-applicant</text>
+<rect x="716" y="120" width="135" height="76" rx="9" fill="#161b22" stroke="#3fb950" stroke-width="1.5"/><rect x="716" y="120" width="5" height="76" rx="2" fill="#3fb950"/>
+<text x="785.5" y="144" font-size="14" fill="#e6edf3" font-weight="700" text-anchor="middle">/rules</text>
+<text x="785.5" y="163" font-size="11.5" fill="#8b949e" font-weight="400" text-anchor="middle">surrogate tree</text>
+<text x="785.5" y="179" font-size="11.5" fill="#8b949e" font-weight="400" text-anchor="middle">16 IF-THEN rules</text>
+<rect x="275" y="235" width="576" height="62" rx="9" fill="#161b22" stroke="#d29922" stroke-width="1.5"/><rect x="275" y="235" width="5" height="62" rx="2" fill="#d29922"/>
+<text x="565.0" y="259" font-size="14" fill="#e6edf3" font-weight="700" text-anchor="middle">Trained artifacts</text>
+<text x="565.0" y="278" font-size="11.5" fill="#8b949e" font-weight="400" text-anchor="middle">LightGBM · 374 trees · 5-fold CV · ROC-AUC 0.7695 · KS 0.402 · rules.json</text>
+<path d="M489,196 L489,235" fill="none" stroke="#8b949e" stroke-width="1.6" marker-end="url(#a-gray)"/>
+<path d="M636,196 L636,235" fill="none" stroke="#8b949e" stroke-width="1.6" marker-end="url(#a-gray)"/>
+<path d="M783,196 L783,235" fill="none" stroke="#8b949e" stroke-width="1.6" marker-end="url(#a-gray)"/>
+<rect x="275" y="330" width="590" height="285" rx="12" fill="#39c5cf" fill-opacity="0.04" stroke="#39c5cf" stroke-opacity="0.45" stroke-dasharray="5 4"/>
+<text x="289" y="352" font-size="11" fill="#39c5cf" font-weight="700" text-anchor="start"></text>
+<text x="850" y="352" font-size="11" fill="#39c5cf" font-weight="700" text-anchor="end">/chat  ·  TALK-TO-DATA PIPELINE</text>
+<rect x="290" y="385" width="105" height="72" rx="9" fill="#161b22" stroke="#39c5cf" stroke-width="1.5"/><rect x="290" y="385" width="5" height="72" rx="2" fill="#39c5cf"/>
+<text x="344.5" y="409" font-size="14" fill="#e6edf3" font-weight="700" text-anchor="middle">Rewrite</text>
+<text x="344.5" y="428" font-size="11.5" fill="#8b949e" font-weight="400" text-anchor="middle">follow-up →</text>
+<text x="344.5" y="444" font-size="11.5" fill="#8b949e" font-weight="400" text-anchor="middle">standalone Q</text>
+<rect x="410" y="385" width="105" height="72" rx="9" fill="#161b22" stroke="#39c5cf" stroke-width="1.5"/><rect x="410" y="385" width="5" height="72" rx="2" fill="#39c5cf"/>
+<text x="464.5" y="409" font-size="14" fill="#e6edf3" font-weight="700" text-anchor="middle">Generate SQL</text>
+<text x="464.5" y="428" font-size="11.5" fill="#8b949e" font-weight="400" text-anchor="middle">schema card +</text>
+<text x="464.5" y="444" font-size="11.5" fill="#8b949e" font-weight="400" text-anchor="middle">few-shot</text>
+<rect x="530" y="385" width="105" height="72" rx="9" fill="#161b22" stroke="#f85149" stroke-width="1.5"/><rect x="530" y="385" width="5" height="72" rx="2" fill="#f85149"/>
+<text x="584.5" y="409" font-size="14" fill="#e6edf3" font-weight="700" text-anchor="middle">Validate</text>
+<text x="584.5" y="428" font-size="11.5" fill="#8b949e" font-weight="400" text-anchor="middle">sqlglot AST:</text>
+<text x="584.5" y="444" font-size="11.5" fill="#8b949e" font-weight="400" text-anchor="middle">SELECT-only</text>
+<rect x="650" y="385" width="105" height="72" rx="9" fill="#161b22" stroke="#3fb950" stroke-width="1.5"/><rect x="650" y="385" width="5" height="72" rx="2" fill="#3fb950"/>
+<text x="704.5" y="409" font-size="14" fill="#e6edf3" font-weight="700" text-anchor="middle">Execute</text>
+<text x="704.5" y="428" font-size="11.5" fill="#8b949e" font-weight="400" text-anchor="middle">read-only</text>
+<text x="704.5" y="444" font-size="11.5" fill="#8b949e" font-weight="400" text-anchor="middle">transaction</text>
+<rect x="770" y="385" width="105" height="72" rx="9" fill="#161b22" stroke="#39c5cf" stroke-width="1.5"/><rect x="770" y="385" width="5" height="72" rx="2" fill="#39c5cf"/>
+<text x="824.5" y="409" font-size="14" fill="#e6edf3" font-weight="700" text-anchor="middle">Answer</text>
+<text x="824.5" y="428" font-size="11.5" fill="#8b949e" font-weight="400" text-anchor="middle">sees only the</text>
+<text x="824.5" y="444" font-size="11.5" fill="#8b949e" font-weight="400" text-anchor="middle">returned rows</text>
+<path d="M395,421 L410,421" fill="none" stroke="#8b949e" stroke-width="1.6" marker-end="url(#a-gray)"/>
+<path d="M515,421 L530,421" fill="none" stroke="#8b949e" stroke-width="1.6" marker-end="url(#a-gray)"/>
+<path d="M635,421 L650,421" fill="none" stroke="#8b949e" stroke-width="1.6" marker-end="url(#a-gray)"/>
+<path d="M755,421 L770,421" fill="none" stroke="#8b949e" stroke-width="1.6" marker-end="url(#a-gray)"/>
+<path d="M582,385 L582,368 L462,368 L462,385" fill="none" stroke="#f85149" stroke-width="1.6" stroke-dasharray="6 4" marker-end="url(#a-red)"/>
+<rect x="433.3" y="353" width="177.4" height="16" rx="4" fill="#0d1117"/>
+<text x="522" y="364" font-size="11" fill="#f85149" font-weight="600" text-anchor="middle">error fed back, ≤ 2 retries</text>
+<text x="290" y="490" font-size="11.5" fill="#8b949e" font-weight="400" text-anchor="start">Also enforced by the validator: 7-table allowlist, LIMIT 200.</text>
+<text x="290" y="510" font-size="11.5" fill="#8b949e" font-weight="400" text-anchor="start">The raw SQL and rows are always shown next to the answer so a reader can verify it.</text>
+<rect x="930" y="120" width="225" height="75" rx="9" fill="#161b22" stroke="#bc8cff" stroke-width="1.5"/><rect x="930" y="120" width="5" height="75" rx="2" fill="#bc8cff"/>
+<text x="1044.5" y="144" font-size="14" fill="#e6edf3" font-weight="700" text-anchor="middle">train.py</text>
+<text x="1044.5" y="163" font-size="11.5" fill="#8b949e" font-weight="400" text-anchor="middle">Logistic Regression baseline</text>
+<text x="1044.5" y="179" font-size="11.5" fill="#8b949e" font-weight="400" text-anchor="middle">vs LightGBM → model.pkl</text>
+<path d="M930,157 L905,157 L905,250 L851,250" fill="none" stroke="#bc8cff" stroke-width="1.6" stroke-dasharray="6 4" marker-end="url(#a-purple)"/>
+<rect x="930" y="235" width="225" height="66" rx="9" fill="#161b22" stroke="#bc8cff" stroke-width="1.5"/><rect x="930" y="235" width="5" height="66" rx="2" fill="#bc8cff"/>
+<text x="1044.5" y="259" font-size="14" fill="#e6edf3" font-weight="700" text-anchor="middle">OpenAI</text>
+<text x="1044.5" y="278" font-size="11.5" fill="#8b949e" font-weight="400" text-anchor="middle">gpt-4o-mini for SQL + answers</text>
+<path d="M865,440 L878,440 L878,285 L930,285" fill="none" stroke="#bc8cff" stroke-width="1.6" stroke-dasharray="6 4" marker-end="url(#a-purple)"/>
+<rect x="845.1" y="307" width="65.80000000000001" height="16" rx="4" fill="#0d1117"/>
+<text x="878" y="318" font-size="11" fill="#bc8cff" font-weight="600" text-anchor="middle">LLM calls</text>
+<path d="M930,370 v75 a112.5,10 0 0 0 225,0 v-75" fill="#161b22" stroke="#58a6ff" stroke-width="1.5"/><ellipse cx="1042.5" cy="370" rx="112.5" ry="10" fill="#161b22" stroke="#58a6ff" stroke-width="1.5"/>
+<text x="1042.5" y="394" font-size="14" fill="#e6edf3" font-weight="700" text-anchor="middle">PostgreSQL</text>
+<text x="1042.5" y="413" font-size="11.5" fill="#8b949e" font-weight="400" text-anchor="middle">7 Home Credit tables</text>
+<text x="1042.5" y="429" font-size="11.5" fill="#8b949e" font-weight="400" text-anchor="middle">(CockroachDB when deployed)</text>
+<path d="M702,457 L702,560 L900,560 L900,420 L930,420" fill="none" stroke="#3fb950" stroke-width="1.6" stroke-dasharray="6 4" marker-end="url(#a-green)"/>
+<rect x="930" y="500" width="225" height="75" rx="9" fill="#161b22" stroke="#bc8cff" stroke-width="1.5"/><rect x="930" y="500" width="5" height="75" rx="2" fill="#bc8cff"/>
+<text x="1044.5" y="524" font-size="14" fill="#e6edf3" font-weight="700" text-anchor="middle">ingest_db.py</text>
+<text x="1044.5" y="543" font-size="11.5" fill="#8b949e" font-weight="400" text-anchor="middle">Kaggle CSVs → Postgres</text>
+<text x="1044.5" y="559" font-size="11.5" fill="#8b949e" font-weight="400" text-anchor="middle">idempotent, runs on first boot</text>
+<path d="M1042,500 L1042,455" fill="none" stroke="#bc8cff" stroke-width="1.6" marker-end="url(#a-purple)"/>
+<path d="M215,160 L275,160" fill="none" stroke="#58a6ff" stroke-width="1.6" marker-end="url(#a-blue)"/>
+<rect x="227.6" y="141" width="34.8" height="16" rx="4" fill="#0d1117"/>
+<text x="245" y="152" font-size="11" fill="#58a6ff" font-weight="600" text-anchor="middle">REST</text>
+<path d="M215,475 L275,430" fill="none" stroke="#58a6ff" stroke-width="1.6" marker-end="url(#a-blue)"/>
+<rect x="210.2" y="455" width="59.6" height="16" rx="4" fill="#0d1117"/>
+<text x="240" y="466" font-size="11" fill="#58a6ff" font-weight="600" text-anchor="middle">question</text>
+</svg>
